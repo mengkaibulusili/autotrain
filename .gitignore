@@ -1,3 +1,4 @@
 local_*
 /myapp/node_modules/*
 *__pycache__/*
+*.pyc
