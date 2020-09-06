@@ -5,7 +5,9 @@ import { InboxOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import * as _ from "lodash";
 import { putJobApi } from "../net/netJob";
 import prettyBytes from "pretty-bytes";
-import { ConfigModelPanel } from "./ConfigModelPanel";
+
+import { Dense, Flatten } from "../modelLayer/Layers";
+import { ModelLayersView } from "../modelLayer/LayersButton";
 
 const { Dragger } = Upload;
 
@@ -25,7 +27,10 @@ export let PutJobPanel = () => {
   let [fSize, setFSize] = useState(0);
   let [file, setFile] = useState("");
 
-  let [modelStructure, setModelStructure] = useState({});
+  let f1: Flatten = { type: "Flatten", inputShape: "auto" };
+  let d1: Dense = { type: "Dense", size: "100", activation: "relu" };
+  let d2: Dense = { type: "Dense", size: "10", activation: "relu" };
+  let [modelStructure, setModelStructure] = useState([f1, d1, d2]);
 
   let formData = new FormData();
 
@@ -70,17 +75,27 @@ export let PutJobPanel = () => {
   };
 
   let ConfigModelPanel = () => {
-    return <Row>模型层级结构</Row>;
+    return (
+      <Row justify="center" gutter={10}>
+        <Col>
+          <Row justify="center" gutter={10}>
+            模型层级结构
+          </Row>
+        </Col>
+      </Row>
+    );
   };
 
   return (
-    <Row gutter={10}>
+    <Row justify="center" gutter={10}>
       <Col flex={1}>
         <Row justify="center">
           <CsvDragger></CsvDragger>
         </Row>
-        <Row justify="center">{prettyBytes(fSize)}</Row>
-        <Row justify="center">
+        <Row justify="center" gutter={10}>
+          {prettyBytes(fSize)}
+        </Row>
+        <Row justify="center" gutter={10}>
           <Input
             addonBefore={"导出模型名称"}
             value={modelN}
@@ -120,7 +135,7 @@ export let PutJobPanel = () => {
           </Button>
         </Row>
       </Col>
-      <Col flex={1}>{ConfigModelPanel()}</Col>
+      <Col flex={2}>{ConfigModelPanel()}</Col>
     </Row>
   );
 };
