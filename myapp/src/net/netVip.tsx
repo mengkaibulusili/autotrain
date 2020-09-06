@@ -4,4 +4,4 @@
 //   doGetRequest(addVipUrl, queryData);
 // }
 
-export let a= ""
+export let a = "";

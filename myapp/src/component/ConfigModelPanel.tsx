@@ -5,7 +5,6 @@ import { InboxOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import * as _ from "lodash";
 import { putJobApi } from "../net/netJob";
 import prettyBytes from "pretty-bytes";
-import { ConfigModelPanel } from "./ConfigModelPanel";
 
 const { Dragger } = Upload;
 
@@ -19,13 +18,11 @@ const { Dragger } = Upload;
 // webkitRelativePath: ""
 // __proto__: File
 
-export let PutJobPanel = () => {
+export let ConfigModelPanel = () => {
   let [fN, setFN] = useState("未提交");
   let [modelN, setModelN] = useState("");
   let [fSize, setFSize] = useState(0);
   let [file, setFile] = useState("");
-
-  let [modelStructure, setModelStructure] = useState({});
 
   let formData = new FormData();
 
@@ -67,10 +64,6 @@ export let PutJobPanel = () => {
         </p>
       </Dragger>
     );
-  };
-
-  let ConfigModelPanel = () => {
-    return <Row>模型层级结构</Row>;
   };
 
   return (
@@ -120,7 +113,7 @@ export let PutJobPanel = () => {
           </Button>
         </Row>
       </Col>
-      <Col flex={1}>{ConfigModelPanel()}</Col>
+      <Col flex={1}></Col>
     </Row>
   );
 };

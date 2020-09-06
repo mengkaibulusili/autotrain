@@ -19,9 +19,9 @@ import { ShowJobPanel } from "./component/ShowJobPanel";
 
 const { Sider, Header, Content } = Layout;
 
-let ShowJob = ()=>{
-  return <ShowJobPanel/>;
-}
+let ShowJob = () => {
+  return <ShowJobPanel />;
+};
 
 let PutJob = () => {
   return <PutJobPanel />;
@@ -65,7 +65,12 @@ let AllRoute = (list: any) => {
 let Application = () => {
   function itemRender(route: any, params: any, routes: any, paths: any) {
     return (
-      <Link key={genUUID()} className="Link" to={route.path} style={{ fontSize:"30px"}}>
+      <Link
+        key={genUUID()}
+        className="Link"
+        to={route.path}
+        style={{ fontSize: "30px" }}
+      >
         {route.breadcrumbName}
       </Link>
     );
@@ -73,8 +78,12 @@ let Application = () => {
 
   return (
     <Layout>
-      <Header style={{ backgroundColor: "#c8d6ec", height: "50px"  }}>
-        <Breadcrumb style={{ fontSize:"30px"}}  itemRender={itemRender} routes={ABrowserPath.head} />
+      <Header style={{ backgroundColor: "#c8d6ec", height: "50px" }}>
+        <Breadcrumb
+          style={{ fontSize: "30px" }}
+          itemRender={itemRender}
+          routes={ABrowserPath.head}
+        />
       </Header>
       <Layout>
         <Content style={{ color: "black" }}>
