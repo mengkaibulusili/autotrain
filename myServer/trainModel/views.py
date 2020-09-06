@@ -3,6 +3,7 @@ import scriptTools.mydecorator as mydecorator
 from scriptTools.dealCsv import dealCsvFile
 from scriptTools.shareQuene import shareQ
 import json
+from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -20,23 +21,23 @@ def usefucbyname(request, fucname):
 
 @mydecorator.httpRes
 def putJob(request):
+    # <QueryDict: {'modelname': ['a'], 'filesize': ['218 B']}>
+    sFile =  request.FILES.get('file')
+    postDict =  dict(request.POST)
+    data =  { x:postDict[x][0] for x in postDict.keys() } 
+    uid = str(uuid.uuid1()).replace("-","")
+    data["jobuuid"]=uid
 
-    print("上传的文件",request.FILES)
-    data= request.POST
-    print("Post内容",data)
-    data:dict=json.loads(request.GET.get("data"))
+    csvName = data["csvname"] if data.__contains__("csvname") else ""
+    if not csvName.endswith(".csv"):
+        raise Exception("file must end with csv")
+    if csvName != "":
+        data["savedir"]=dealCsvFile(uid,"input.csv",sFile)
 
     # 投递任务 ，如果投递失败 抛出 异常 之后的代码不会执行
     shareQ.q.put_nowait(data)
 
-    uid = str(uuid.uuid1()).replace("-","")
-    data["jobuuid"]=uid
-    
-    csvName = data["csvname"] if data.__contains__("csvname") else ""
-    if csvName != "":
-        dealCsvFile(uid,csvName,"")
-
-
+    # the JSON object must be str, bytes or bytearray, not NoneType
     JobInfo(**data).save()
 
 
@@ -49,6 +50,19 @@ def getJob(request):
 @mydecorator.httpData
 def getJobLen(request):
     return shareQ.q.qsize()
+
+
+@mydecorator.httpData
+def getAllJobInfo(request):
+  data = json.loads(request.GET.get("data") )
+  modelname = data["modelname"]
+  jobstatus = data["jobstatus"]
+  createtime = data["createtime"]
+  return json.loads(serializers.serialize("json", JobInfo.objects.filter(
+    modelname__contains=modelname,
+    jobstatus__contains=jobstatus,
+    createtime__contains=createtime,
+  ).order_by('-createtime')))
 
 
 # def get_user_profiles(request):

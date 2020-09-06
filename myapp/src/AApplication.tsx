@@ -15,10 +15,13 @@ import { genUUID } from "./component/globalFunction";
 import { Layout, Breadcrumb, Row } from "antd";
 
 import { PutJobPanel } from "./component/PutJobPanel";
+import { ShowJobPanel } from "./component/ShowJobPanel";
 
 const { Sider, Header, Content } = Layout;
 
-
+let ShowJob = ()=>{
+  return <ShowJobPanel/>;
+}
 
 let PutJob = () => {
   return <PutJobPanel />;

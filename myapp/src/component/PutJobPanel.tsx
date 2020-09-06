@@ -28,8 +28,6 @@ export let PutJobPanel = ()=>{
     let [fSize,setFSize] = useState(0);
     let [file,setFile] = useState("");
 
-
-
     let formData = new FormData();
 
 
@@ -46,10 +44,7 @@ export let PutJobPanel = ()=>{
           if (status !== 'uploading') {
             let  fileName  = _.get(info,"file.name","未提交")
             let  fileSize  = _.get(info,"file.size",0)
-            console.log(info.file);
-            formData.set('file', info.file);
             setFile(info.file)
-            // console.log("文件",formData.get("file"));
             setFN(fileName);
             setFSize(fileSize);
           }
@@ -87,17 +82,28 @@ export let PutJobPanel = ()=>{
                 </Row>
                 <Row justify="center">
                     <Input addonBefore={"导出模型名称"}
-                     onChange={(event)=>{setModelN(event.target.value)}}
-                     placeholder={"填写生成模型的名称,只有大小写英文"} style={{ width:"300px"}}></Input>
+                     value={modelN}
+                     onChange={(event)=>{
+                         let textValue = event.target.value;
+                       if ( /^[a-zA-Z0-9]+$/.test(textValue)){
+                        setModelN(event.target.value);
+                       }else{
+                        setModelN("");
+                        let config = {"content":<p>模型名称只能由大小写字母和数字构成</p>,"duration":3};
+                        message.error(config);
+                       }
+                    }}
+                     placeholder={"只有大小写英文"} style={{ width:"300px"}}></Input>
                 </Row>
                 <Row justify="center">
                     <Button type="default" 
                     onClick={()=>{
                         formData.set("modelname",modelN);
-                        formData.set("filesize",prettyBytes(fSize));
+                        formData.set("csvsize",prettyBytes(fSize));
+                        formData.set("csvname",fN);
                         formData.set('file', file);
-                        console.log("上传文件",formData.get("file"));
                         putJobApi(formData);
+                        setModelN("");
                     }} 
                     disabled={ _.isEqual(fN,"未提交") || _.isEqual(modelN,"") ? true : false }
                     >

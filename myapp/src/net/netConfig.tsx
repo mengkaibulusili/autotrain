@@ -4,3 +4,5 @@ export let Gtimeout = 2000;
 
 // url list
 export let putJobUrl = "/api/trainModel/putJob/"
+
+export let getJobsByModelNameUrl = "/api/trainModel/getAllJobInfo/"

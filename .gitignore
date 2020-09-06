@@ -2,3 +2,4 @@ local_*
 /myapp/node_modules/*
 *__pycache__/*
 *.pyc
+/myServer/storeFiles/*

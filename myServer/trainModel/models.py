@@ -14,6 +14,7 @@ class JobInfo(models.Model):
     starttime = models.CharField( default="_", max_length=charlen, blank=True)
     endtime = models.CharField( default="_", max_length=charlen, blank=True)
 
+    savedir = models.CharField( default="",blank=True, max_length=charlen)
     csvname = models.CharField( default="null__",blank=True, max_length=charlen)
     csvsize = models.CharField( default="0",blank=True, max_length=charlen)
 
