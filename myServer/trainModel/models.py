@@ -3,6 +3,7 @@ import uuid
 import scriptTools.timeTools as tTools
 
 charlen = 200
+longercharlen = 1000
 
 # Create your models here.
 class JobInfo(models.Model):
@@ -20,7 +21,7 @@ class JobInfo(models.Model):
 
     modelname = models.CharField( default="null__",blank=True, max_length=charlen)
     modelsize = models.CharField(default="0",blank=True, max_length=charlen)
-    modelstructure = models.CharField(default="0",blank=True, max_length=charlen)
+    modelstructure = models.CharField(default=r'{}',blank=True, max_length=longercharlen)
 
     modeltotalsample = models.CharField(default="0",blank=True, max_length=charlen)
     modeltrainsample = models.CharField(default="0",blank=True, max_length=charlen)
