@@ -17,6 +17,8 @@ def getJobTest():
     return json.loads(s1)
 
 
+
+
 # {'code': '0', 'message': '', 'data': {'modelname': 'assaasasasa', 'csvsize': '0 B', 'csvname': 'asas.csv', 'modelstructure': '[{"index":0,"type":"Flatten","inputShape":"auto"},{"index":1,"type":"Dense","size":"100","activation":"relu"},{"index":2,"type":"Dense","size":"auto","activation":"relu"}]', 'jobuuid': '69f06fd2f10c11eaba1b1cb72c0cb1bd', 'savedir': 'D:\\ProgWare\\lmk\\autotrain\\myServer\\storeFiles\\69f06fd2f10c11eaba1b1cb72c0cb1bd'}}
 def dealJobContent():
     # content =  getJobFromQuene()
