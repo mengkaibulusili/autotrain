@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "D:\\ProgWare\\Deeplearn\\Anoconda3\\python.exe"
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

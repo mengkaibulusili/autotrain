@@ -77,6 +77,22 @@ export async function GetRequestData(url: string, queryData: Object) {
   } catch (err) {
     dealResp(resq);
     return [];
-  } finally {
+  }
+}
+
+export async function GetRequestCode(url: string, queryData: Object) {
+  let resq = {};
+  try {
+    resq = await axios.get(Gproxy + url, {
+      params: {
+        data: JSON.stringify(queryData),
+      },
+      timeout: Gtimeout,
+    });
+    console.log("resq", resq);
+    return _.get(resq, "data", {});
+  } catch (err) {
+    dealResp(resq);
+    return [];
   }
 }

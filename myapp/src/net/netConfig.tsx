@@ -6,3 +6,7 @@ export let Gtimeout = 2000;
 export let putJobUrl = "/api/trainModel/putJob/";
 
 export let getJobsByModelNameUrl = "/api/trainModel/getAllJobInfo/";
+
+export let changeLogsPathUrl = "/api/trainModel/changeLogsPath/";
+
+export let tensorBoardUrl = "http://localhost:6006";

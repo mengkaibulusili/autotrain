@@ -3,3 +3,4 @@ local_*
 *__pycache__/*
 *.pyc
 /myServer/storeFiles/*
+/myTensorBoard/logs/*

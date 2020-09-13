@@ -1,12 +1,26 @@
-import { doGetRequest, GetRequestData, doPostRequest } from "./netDoRequest";
-import { putJobUrl, getJobsByModelNameUrl } from "./netConfig";
+import {
+  doGetRequest,
+  GetRequestData,
+  doPostRequest,
+  GetRequestCode,
+} from "./netDoRequest";
+import {
+  putJobUrl,
+  getJobsByModelNameUrl,
+  changeLogsPathUrl,
+} from "./netConfig";
 
 export function putJobApi(fromData: Object) {
   doPostRequest(putJobUrl, fromData);
 }
 
 export async function getJobsByModelNameApi(queryData: Object) {
-  let data = GetRequestData(getJobsByModelNameUrl, queryData);
+  let data = await GetRequestData(getJobsByModelNameUrl, queryData);
+  return data;
+}
+
+export async function setLogsPathApi(queryData: Object) {
+  let data = await GetRequestCode(changeLogsPathUrl, queryData);
   return data;
 }
 

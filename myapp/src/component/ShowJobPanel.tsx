@@ -13,9 +13,11 @@ import {
 import { AnyCnameRecord } from "dns";
 import { RightCircleTwoTone, QuestionCircleTwoTone } from "@ant-design/icons";
 import * as _ from "lodash";
-import { getJobsByModelNameApi } from "../net/netJob";
+import { getJobsByModelNameApi, setLogsPathApi } from "../net/netJob";
 import prettyBytes from "pretty-bytes";
 import ReactJson from "react-json-view";
+import { tensorBoardUrl } from "../net/netConfig";
+import { duration } from "moment";
 
 const { Option } = Select;
 
@@ -40,7 +42,7 @@ export let ShowJobPanel = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [jobStatues]);
 
   const columns = [
     {
@@ -65,7 +67,13 @@ export let ShowJobPanel = () => {
       render: (text: any, record: any, index: number) => {
         let viewContent = () => {
           console.log(record);
-          return <ReactJson key="detailInfoReactJson" src={record}></ReactJson>;
+          return (
+            <ReactJson
+              style={{ width: 700 }}
+              key="detailInfoReactJson"
+              src={record}
+            ></ReactJson>
+          );
         };
         return (
           <Popover
@@ -88,13 +96,72 @@ export let ShowJobPanel = () => {
       title: "训练详情",
       key: "trainInfo",
       render: (text: any, record: any, index: number) => {
+        console.log(record);
+        console.log(_.get(record, "fields.jobstatus", "失败"));
         return (
           <Button
             key="trainInfoButton"
             type="default"
             icon={<RightCircleTwoTone key="trainInfoTone" />}
-            href={"/"}
-            target="_blank"
+            // href={"/"}
+            // target="_blank"
+            disabled={
+              "已成功" == _.get(record, "fields.jobstatus", "失败")
+                ? false
+                : true
+            }
+            onClick={async () => {
+              let job_uuid = _.get(record, "fields.jobuuid", "-1");
+              let params = { job_uuid: job_uuid };
+              let data = await setLogsPathApi(params);
+              if ("0" === _.get(data, "code", "-1")) {
+                let remain_i = 10;
+                message.info({
+                  content: (
+                    <p>
+                      耐心等待 {remain_i} s
+                      <br />
+                      数据加载时间
+                      <br />
+                      性能消耗较高
+                      <br />
+                      请勿同时打开多个任务
+                    </p>
+                  ),
+                  duration: 3,
+                  key: "remainSecond",
+                });
+
+                let timer = setInterval(() => {
+                  remain_i = remain_i - 1;
+                  message.info({
+                    content: (
+                      <p>
+                        耐心等待 {remain_i} s
+                        <br />
+                        数据加载时间
+                        <br />
+                        性能消耗较高
+                        <br />
+                        请勿同时打开多个任务
+                      </p>
+                    ),
+                    duration: 3,
+                    key: "remainSecond",
+                  });
+                  if (remain_i == 0) {
+                    clearInterval(timer);
+                  }
+                }, 1000);
+                setTimeout(() => {
+                  window.open(tensorBoardUrl);
+                  message.destroy();
+                }, 10000);
+              } else {
+                message.error("任务执行错误");
+              }
+              console.log("改变日志位置 ", data);
+            }}
           ></Button>
         );
       },
@@ -140,7 +207,7 @@ export let ShowJobPanel = () => {
               <Option value="">所有</Option>
               <Option value="未开始">未开始</Option>
               <Option value="执行中">执行中</Option>
-              <Option value="已完成">已完成</Option>
+              <Option value="已成功">已成功</Option>
               <Option value="失败">失败</Option>
             </Select>
           </Col>
