@@ -109,7 +109,7 @@ def pruductModel():
 
     model.add(keras.layers.Dense(int(type_count)))
 
-    early_stop_callback = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-2, patience=10)
+    early_stop_callback = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-2, patience=5)
     # early_stop_callback = tf.keras.callbacks.EarlyStopping(
     #     monitor='loss',  patience=10
     # )

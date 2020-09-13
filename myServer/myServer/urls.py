@@ -14,10 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,re_path
+from django.urls import path, re_path
 from trainModel import views as trainModel
+from downloadFile import views as downloadFile
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'^api/trainModel/(?P<fucname>[a-zA-Z0-9]+)/$', trainModel.usefucbyname),
+  path('admin/', admin.site.urls),
+  re_path(r'^api/trainModel/(?P<fucname>[a-zA-Z0-9]+)/$', trainModel.usefucbyname),
+  re_path(r'^api/downloadFile/(?P<fucname>[a-zA-Z0-9]+)/$', downloadFile.usefucbyname),
 ]

@@ -102,17 +102,18 @@ def changeLogsPath(request):
   x = JobInfo.objects.get(jobuuid=job_uuid)
 
   logs_dir = os.path.join(x.savedir, "logs")
-  myTensorBoardLogPath = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-  myTensorBoardLogPath = os.path.join(myTensorBoardLogPath, "myTensorBoard/logs")
 
   message = os.system('docker stop tsboard')
   print("deckor", message)
 
-  if os.path.exists(myTensorBoardLogPath):
-    shutil.rmtree(myTensorBoardLogPath)
-  shutil.copytree(logs_dir, myTensorBoardLogPath)
+  # myTensorBoardLogPath = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+  # myTensorBoardLogPath = os.path.join(myTensorBoardLogPath, "myTensorBoard/logs")
+  # if os.path.exists(myTensorBoardLogPath):
+  #   shutil.rmtree(myTensorBoardLogPath)
+  # shutil.copytree(logs_dir, myTensorBoardLogPath)
 
-  message = os.system('docker run -itd -p 6006:6006 -v C:/gitproj/autotrain/myTensorBoard/logs:/root/logs --rm --name tsboard tensorflow/tensorflow:nightly-py3-jupyter "tensorboard" "--logdir" "/root/logs" "--bind_all"')
+  # message = os.system('docker run -itd -p 6006:6006 -v C:/gitproj/autotrain/myTensorBoard/logs:/root/logs --rm --name tsboard tensorflow/tensorflow:nightly-py3-jupyter "tensorboard" "--logdir" "/root/logs" "--bind_all"')
+  message = os.system('docker run -itd -p 6006:6006 -v  {}:/root/logs --rm --name tsboard tensorflow/tensorflow:nightly-py3-jupyter "tensorboard" "--logdir" "/root/logs" "--bind_all"'.format(logs_dir))
   print("deckor", message)
 
 

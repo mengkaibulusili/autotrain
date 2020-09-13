@@ -106,7 +106,8 @@ export let ShowJobPanel = () => {
             // href={"/"}
             // target="_blank"
             disabled={
-              "已成功" == _.get(record, "fields.jobstatus", "失败")
+              "已成功" == _.get(record, "fields.jobstatus", "失败") ||
+              "执行中" == _.get(record, "fields.jobstatus", "失败")
                 ? false
                 : true
             }
