@@ -106,7 +106,7 @@ export let ShowJobPanel = () => {
             // href={"/"}
             // target="_blank"
             disabled={
-              "已成功" == _.get(record, "fields.jobstatus", "失败") ||
+              "已完成" == _.get(record, "fields.jobstatus", "失败") ||
               "执行中" == _.get(record, "fields.jobstatus", "失败")
                 ? false
                 : true
@@ -208,7 +208,7 @@ export let ShowJobPanel = () => {
               <Option value="">所有</Option>
               <Option value="未开始">未开始</Option>
               <Option value="执行中">执行中</Option>
-              <Option value="已成功">已成功</Option>
+              <Option value="已完成">已完成</Option>
               <Option value="失败">失败</Option>
             </Select>
           </Col>
