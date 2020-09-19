@@ -1,3 +1,7 @@
+# 启动服务器
+
+python ./Test/startTest.py
+
 # trainModel url 测试
 
 http://localhost:8000/api/trainModel/success/
