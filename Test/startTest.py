@@ -6,6 +6,8 @@ def start_myApp():
   workdir = os.path.dirname(os.path.dirname(__file__))
   workdir = os.path.join(workdir, "myapp")
   os.chdir(workdir)
+  r = os.system("npm install")
+  print("myapp return {}".format(r))
   r = os.system("npm start")
   print("myapp return {}".format(r))
 
