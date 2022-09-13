@@ -4,3 +4,5 @@ local_*
 *.pyc
 /myServer/storeFiles/*
 /myTensorBoard/logs/*
+
+py3_venv/

@@ -46,3 +46,9 @@ python
 django
 sqlite3
 
+# start server
+```bash
+.\py3_venv\Scripts\Activate.ps1
+(py3_venv) pip install -r .\requirements.txt
+(py3_venv) python ./Test/startTest.py
+```
